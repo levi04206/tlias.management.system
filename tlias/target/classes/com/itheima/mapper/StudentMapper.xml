@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.StudentMapper">
+    <insert id="insert">
+        -- 添加新学员
+        insert into student (name, no, gender, phone, id_card, is_college, address, degree, graduation_date, clazz_id,create_time,update_time)
+        VALUES (#{name},#{no},#{gender},#{phone},#{idCard},#{isCollege},#{address}, #{degree},#{graduationDate},#{clazzId},#{createTime},#{updateTime})
+    </insert>
+    <update id="update">
+        <!-- 根据id修改学员基本信息 -->
+        update student set
+            name = #{name},
+            no = #{no},
+            gender = #{gender},
+            phone = #{phone},
+            id_card = #{idCard},
+            is_college = #{isCollege},
+            address = #{address},
+            degree = #{degree},
+            graduation_date = #{graduationDate},
+            clazz_id = #{clazzId}
+            where id = #{id}
+    </update>
+    <update id="updateClazzName">
+       <!-- 修改学员所属班级信息 -->
+        update student set clazz_id = #{clazzId},where id = #{id}
+    </update>
+    <update id="violationById">
+        <!-- 根据id修改学员违纪信息 -->
+        update student
+        set violation_count = #{violationCount},
+            violation_score = #{violationScore}
+        where id = #{id};
+    </update>
+    <delete id="deleteByIds">
+        -- 根据ids批量删除员工
+        delete from student where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+
+    </delete>
+
+    <select id="select" resultType="com.itheima.pojo.Student">
+        -- 学员列表分页查询
+        select  s.*,c.name as clazz_name
+        from student s left join clazz c on s.clazz_id = c.id
+        <where>
+            <if test="name!= null and name != ''">
+                and s.name like concat('%',#{name},'%')
+            </if>
+            <if test="degree != null">
+                and s.degree = #{degree}
+            </if>
+            <if test="clazzId != null">
+                 and s.clazz_id = #{clazzId}
+            </if>
+        </where>
+                 order by update_time desc
+    </select>
+    <select id="selectById" resultType="com.itheima.pojo.Student">
+        -- 根据id查询员工
+        SELECT s.*, c.name AS clazzName
+        FROM student s
+                 LEFT JOIN clazz c ON s.clazz_id = c.id
+        WHERE s.id = #{id}
+
+    </select>
+
+</mapper>

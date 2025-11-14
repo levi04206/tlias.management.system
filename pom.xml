@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>  <!-- 替换为您的groupId，如com.web-ai -->
+    <artifactId>web-ai-project03</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>  <!-- 父项目打包类型 -->
+
+    <modules>  <!-- 列出所有子模块文件夹名 -->
+        <module>springboot-aop-quickstart</module>
+        <module>itheima-utils</module>
+        <module>tlias</module>
+        <module>aliyun-oss-spring-boot-starter</module>
+        <module>aliyun-oss-spring-boot-autoconfigure</module>
+
+        <!-- 添加其他子模块 -->
+    </modules>
+
+    <!-- 可选：统一依赖版本 -->
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>  <!-- Java版本 -->
+        <maven.compiler.target>17</maven.compiler.target>
+        <spring-boot.version>3.0.0</spring-boot.version>  <!-- 示例 -->
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
